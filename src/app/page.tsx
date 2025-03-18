@@ -36,7 +36,7 @@ export default async function Page() {
                 Subscribe-DAPP
             </div>
             <div className="textStyle">
-                Sepolia Testnet. 
+                Sepolia Testnet. {process.env.NEXT_PUBLIC_WS_PROVIDER}
             </div>
                 <DisplayEvents></DisplayEvents>
                 <LowerBanner></LowerBanner>

@@ -14,7 +14,7 @@ You can ask to your node to send automatically a message each time:
 - a new transaction has been added in the pending block.
 
 ## Launch
-The test DAPP is deployed [here]().
+The test DAPP is deployed [here](https://starknet-subscribe.vercel.app/).
 
 ## Local execution
 Add at the root a `.env` file, including `NEXT_PUBLIC_WS_PROVIDER=`, and add the url of your websocket server.  

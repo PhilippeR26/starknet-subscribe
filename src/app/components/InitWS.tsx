@@ -34,5 +34,5 @@ export default function InitWS() {
     []
   );
 
-  return <></>
+  return <>{process.env.NEXT_PUBLIC_WS_PROVIDER}</>
 }
