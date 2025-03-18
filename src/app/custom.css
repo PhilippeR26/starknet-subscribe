@@ -1,0 +1,72 @@
+.titleBar {
+    color: white;
+    background-color: #4158D0;
+    background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+}
+
+.myButton {
+    box-shadow: 3px 4px 0px 0px #899599;
+    background: linear-gradient(to bottom, #ededed 5%, #bab1ba 100%);
+    background-color: #ededed;
+    border-radius: 6px;
+    border: 1px solid #d6bcd6;
+    display: inline-block;
+    cursor: pointer;
+    color: #17109b;
+    font-family: Arial;
+    font-size: 17px;
+    font-weight: bold;
+    padding: 7px 12px;
+    text-decoration: none;
+}
+
+.myButton:hover {
+    background: linear-gradient(to bottom, #bab1ba 5%, #ededed 100%);
+    background-color: #bab1ba;
+}
+
+.myButton:active {
+    position: relative;
+    top: 1px;
+}
+
+.walletButton {
+    background: linear-gradient(to bottom, #ededed 5%, #bab1ba 100%);
+    background-color: #ededed;
+    border-radius: 3px;
+    border: 1px solid #7a7575;
+    display: inline-block;
+    cursor: pointer;
+    color: #0c0c0d;
+    font-family: Arial;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 3px;
+    text-decoration: none;
+}
+
+.walletButton:hover {
+    background: linear-gradient(to bottom, #5e876e 5%, #ededed 100%);
+    background-color: #d10ed1;
+}
+
+.walletButton:active {
+    position: relative;
+    top: 1px;
+}
+
+.normalTextBlack {
+    color: black;
+    font-family: Arial;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+.textStyle {
+    color: rgb(141, 146, 10);
+    font-size: 20px;
+    font-family: sans-serif;
+    font-weight: 600;
+    text-align: center;
+    padding: 20px;
+}
