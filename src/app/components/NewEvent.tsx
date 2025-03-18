@@ -23,7 +23,7 @@ export default function NewEvent() {
   }
 
   useEffect(() => {
-    console.log("Subscribe events...", myWS);
+    console.log("Subscribe events...");
     myWS!.subscribeEvents(strkAddress).then((resp: number | false) => {
       if (!resp) {
         throw new Error("Events subscription failed");

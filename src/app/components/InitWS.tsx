@@ -9,7 +9,7 @@ export default function InitWS() {
 
   useEffect(() => {
     const wsURL = process.env.NEXT_PUBLIC_WS_PROVIDER;
-    console.log("Connection of websocket...", wsURL);
+    console.log("Connection of websocket...");
     const myWS = new WebSocketChannel({ nodeUrl: wsURL });
     myWS.waitForConnection().then((resp: any) => {
       console.log("Is connected WS =", myWS.isConnected());
@@ -19,7 +19,7 @@ export default function InitWS() {
     })
 
     return () => {
-      console.log("Disconnect websocket...", myWS);
+      console.log("Disconnect websocket...");
       myWS?.disconnect();
       myWS?.waitForDisconnection().then(
         (resp: any) => {
@@ -34,5 +34,5 @@ export default function InitWS() {
     []
   );
 
-  return <>{process.env.NEXT_PUBLIC_WS_PROVIDER}</>
+  return <></>
 }

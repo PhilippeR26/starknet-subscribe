@@ -20,7 +20,7 @@ export default function TxStatus() {
   }
 
   useEffect(() => {
-    console.log("Subscribe tx status...", myWS);
+    console.log("Subscribe tx status...");
     myWS!.subscribeTransactionStatus("0x7f0dce88163f6565139d677f86ded8c396b449ed098272c6b06c5d2bddeae43").then((resp: number | false) => {
       if (!resp) {
         throw new Error("tx status subscription failed");

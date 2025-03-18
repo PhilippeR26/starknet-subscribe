@@ -20,7 +20,7 @@ export default function NewBlock() {
   }
 
   useEffect(() => {
-    console.log("Subscribe newHeads...", myWS);
+    console.log("Subscribe newHeads...");
     myWS!.subscribeNewHeads().then((resp: number | false) => {
       if (!resp) {
         throw new Error("newHead subscription failed");
