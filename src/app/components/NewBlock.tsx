@@ -21,7 +21,7 @@ export default function NewBlock() {
 
   useEffect(() => {
     console.log("Subscribe newHeads...");
-    myWS!.subscribeNewHeads().then((resp: number | false) => {
+    myWS!.subscribeNewHeads().then((resp: string | false) => {
       if (!resp) {
         throw new Error("newHead subscription failed");
       }

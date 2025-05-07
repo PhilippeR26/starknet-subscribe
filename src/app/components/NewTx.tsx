@@ -24,7 +24,7 @@ export default function NewTx() {
 
   useEffect(() => {
     console.log("Subscribe pending tx...");
-    myWS!.subscribePendingTransaction().then((resp: number | false) => {
+    myWS!.subscribePendingTransaction().then((resp: string | false) => {
       if (!resp) {
         throw new Error("pending tx subscription failed");
       }
