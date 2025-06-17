@@ -1,49 +1,52 @@
 "use client";
 import { Box, Spinner } from "@chakra-ui/react"
 import { useGlobalState } from "./globalContext";
-import { useEffect, useState } from "react";
-import { SubscriptionNewHeadsResponse, type SubscriptionPendingTransactionsResponse } from "@starknet-io/types-js";
+import { useEffect, useRef, useState } from "react";
+import { SubscriptionNewHeadsResponse, type SubscriptionPendingTransactionsResponse, type TXN_WITH_HASH } from "@starknet-io/types-js";
 import { formatBalance } from "../utils/utils";
+import type { Subscription, TXN_HASH } from "starknet";
 
 
 
 export default function NewTx() {
 
   const myWS = useGlobalState(state => state.wsProvider);
-  const [newTxID, setNewTxID] = useState<bigint | undefined>(undefined);
-  const [tx, setTx] = useState<SubscriptionPendingTransactionsResponse | undefined>(undefined);
+  const [tx, setTx] = useState<TXN_HASH | TXN_WITH_HASH | undefined>(undefined);
   const [counter, setCounter] = useState<number>(0);
+  const counterRef = useRef<Function>(() => { });
 
-  if (myWS) {
-    myWS.onPendingTransaction = async function (newTx: SubscriptionPendingTransactionsResponse) {
-      console.log("pending Tx event", counter, "=", newTx);
-      setTx(newTx);
-      setCounter(counter + 1);
-    };
-  }
+  // increase the counter
+  function increaseCounter() {
+    setCounter(counter + 1); // counter is refreshed thanks to useRef()
+    console.log("newTx event", counter + 1, "=");
+  };
+  useEffect(() => { counterRef.current = increaseCounter }); // keep counter updated
+
+  function getEvent(newTx: TXN_HASH | TXN_WITH_HASH) {
+    counterRef.current(); // increase counter
+    console.log(newTx);
+    setTx(newTx);
+  };
 
   useEffect(() => {
-    console.log("Subscribe pending tx...");
-    myWS!.subscribePendingTransaction().then((resp: string | false) => {
-      if (!resp) {
-        throw new Error("pending tx subscription failed");
-      }
-      console.log("subscribe pending tx response =", resp);
-      setNewTxID(BigInt(resp));
+    console.log("Subscribe newTx...");
+    let handlerNewTx: Subscription;
+    myWS!.subscribePendingTransaction().then((resp: Subscription) => {
+      handlerNewTx = resp;
+      console.log("Subscribe newTx response =", resp);
+      handlerNewTx.on(getEvent);
+      console.log("Subscribed for newTx.");
     });
-    console.log("Subscribed for pending tx.");
     return () => {
-      console.log("Unsubscribe pending tx...");
-      myWS?.unsubscribePendingTransaction().then((resp: boolean) => {
-        console.log("Unsubscription pending tx is", resp);
-      }).catch((err: any) => {
-        console.log("Unsubscription pending tx ", err);
-      });
-
+      console.log("Unsubscribe newTx...");
+      handlerNewTx.unsubscribe().then(() => {
+        console.log("Unsubscribed from newTx.");
+       });
     }
   },
     []
   );
+
 
   return (
     <Box
@@ -64,7 +67,7 @@ export default function NewTx() {
         <Spinner color={"blue"}></Spinner> {" "}
         Fetching data
       </> : <>
-        last pending transaction #{counter}: {tx.result.toString()}<br></br>
+        last pending transaction #{counter}: {tx.toString()}<br></br>
 
       </>}
     </Box>

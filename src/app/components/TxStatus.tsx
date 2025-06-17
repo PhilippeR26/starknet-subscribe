@@ -2,45 +2,42 @@
 import { Box, Spinner } from "@chakra-ui/react"
 import { useGlobalState } from "./globalContext";
 import { useEffect, useState } from "react";
-import { type SubscriptionTransactionsStatusResponse } from "@starknet-io/types-js";
+import { type NEW_TXN_STATUS, type SubscriptionTransactionsStatusResponse } from "@starknet-io/types-js";
+import type { Subscription } from "starknet";
 
 
 
 export default function TxStatus() {
 
   const myWS = useGlobalState(state => state.wsProvider);
-  const [newHeadID, setNewHeadID] = useState<bigint | undefined>(undefined);
-  const [status, setStatus] = useState<SubscriptionTransactionsStatusResponse | undefined>(undefined);
+  const [status, setStatus] = useState<NEW_TXN_STATUS | undefined>(undefined);
 
-  if (myWS) {
-    myWS.onTransactionStatus = async function (st: SubscriptionTransactionsStatusResponse) {
-      console.log("tx status event =", st);
-      setStatus(st);
-    };
-  }
+
+  function storeTxStatus(newTxStatus: NEW_TXN_STATUS) {
+    console.log("txStatus event", "=", newTxStatus);
+    setStatus(newTxStatus);
+  };
 
   useEffect(() => {
-    console.log("Subscribe tx status...");
-    myWS!.subscribeTransactionStatus("0x7f0dce88163f6565139d677f86ded8c396b449ed098272c6b06c5d2bddeae43").then((resp: string | false) => {
-      if (!resp) {
-        throw new Error("tx status subscription failed");
-      }
-      console.log("subscribe tx status response =", resp);
-      setNewHeadID(BigInt(resp));
+    console.log("Subscribe txStatus...");
+    let handlerNewTxStatus: Subscription;
+    myWS!.subscribeTransactionStatus("0x7f0dce88163f6565139d677f86ded8c396b449ed098272c6b06c5d2bddeae43").then((resp: Subscription) => {
+      handlerNewTxStatus = resp;
+      console.log("Subscribe txStatus response =", resp);
+      handlerNewTxStatus.on(storeTxStatus);
+      console.log("Subscribed for txStatus.");
     });
-    console.log("Subscribed for tx status.");
     return () => {
-      console.log("Unsubscribe tx status...");
-      myWS?.unsubscribeTransactionStatus().then((resp: boolean) => {
-        console.log("Unsubscription tx status is", resp);
-      }).catch((err:any)=>{
-        console.log("Unsubscription tx status ", err);
-      });
+      console.log("Unsubscribe txStatus...");
+      handlerNewTxStatus.unsubscribe().then(() => {
+        console.log("Unsubscribed from TxStatus.");
 
+       });
     }
   },
     []
   );
+
 
   return (
     <Box
@@ -60,7 +57,7 @@ export default function TxStatus() {
         <Spinner color={"blue"}></Spinner> {" "}
         Fetching data
       </> : <>
-        status of transaction : {JSON.stringify(status.result.status)}
+        status of transaction : {JSON.stringify(status.status)}
       </>}
     </Box>
   )

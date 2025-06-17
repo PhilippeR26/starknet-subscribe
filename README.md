@@ -6,7 +6,7 @@ A small DAPP demonstrating the Starknet websocket subscriptions.
   <img src="./public/subscribeDAPP.png" />
 </p>
 
-You can subscribe to Websocket messages sent by your rpc 0.8 node.
+You can subscribe to Websocket messages sent by your Starknet WebSocket v0.8 node.
 You can ask to your node to send automatically a message each time:
 - a new block is created.
 - a transaction has changed its status.
@@ -17,5 +17,14 @@ You can ask to your node to send automatically a message each time:
 The test DAPP is deployed [here](https://starknet-subscribe.vercel.app/).
 
 ## Local execution
-Add at the root a `.env` file, including `NEXT_PUBLIC_WS_PROVIDER=`, and add the url of your websocket server.  
-Launch with `npm run dev`
+- Add at the root a `.env.local` file, including `NEXT_PUBLIC_WS_PROVIDER=`, and add the url of your websocket server.
+ 
+> [!TIP]
+>  Examples for local nodes:
+> ```bash
+> NEXT_PUBLIC_WS_PROVIDER=ws://localhost:9545/rpc/v0_8 # pathfinder 
+> # NEXT_PUBLIC_WS_PROVIDER=ws://localhost:6071/ws/rpc/v0_8 #juno
+> ```
+
+- Launch with `npm run dev`
+- In your browser, open `http://localhost:3000/`

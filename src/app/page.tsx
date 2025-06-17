@@ -8,7 +8,7 @@ import starknetReactImg from "./Images/starknet-logo.svg";
 import LowerBanner from './components/LowerBanner';
 import NewBlock from './components/NewBlock';
 import InitWS from './components/InitWS';
-import DisplayEvents from './components/DisplayEvents';
+import ConnectWS from './components/ConnectWS';
 
 export default async function Page() {
     const align: "left" | "center" | "right" = "center";
@@ -24,7 +24,6 @@ export default async function Page() {
 
     return (
         <div>
-            <InitWS></InitWS>
             <div className='titleBar' style={titleStyle}>
                 <div>
                     <Image
@@ -38,7 +37,7 @@ export default async function Page() {
             <div className="textStyle">
                 Sepolia Testnet.
             </div>
-                <DisplayEvents></DisplayEvents>
+                <ConnectWS></ConnectWS>
                 <LowerBanner></LowerBanner>
         </div >
     )

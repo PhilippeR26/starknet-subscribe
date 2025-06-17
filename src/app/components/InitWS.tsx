@@ -8,9 +8,10 @@ export default function InitWS() {
   const setWsProvider = useGlobalState((state) => state.setWsProvider);
 
   useEffect(() => {
-    const wsURL = process.env.NEXT_PUBLIC_WS_PROVIDER;
-    console.log("Connection of websocket...");
+    const wsURL = process.env.NEXT_PUBLIC_WS_PROVIDER??"";
+    console.log("Connection of websocket...", wsURL);
     const myWS = new WebSocketChannel({ nodeUrl: wsURL });
+    console.log("WS connection response :",myWS);
     myWS.waitForConnection().then((resp: any) => {
       console.log("Is connected WS =", myWS.isConnected());
       setWsProvider(myWS);
@@ -21,14 +22,7 @@ export default function InitWS() {
     return () => {
       console.log("Disconnect websocket...");
       myWS?.disconnect();
-      myWS?.waitForDisconnection().then(
-        (resp: any) => {
-          console.log("After disconnect. Connected =", myWS.isConnected(), resp);
-        })
-        .catch((error: any) => {
-          throw new Error("Error disconnection WebSocket:", error.message);
-        }
-        );
+      console.log("WebSocket disconnected.");
     }
   },
     []
