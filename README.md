@@ -23,7 +23,7 @@ The test DAPP is deployed [here](https://starknet-subscribe.vercel.app/).
 >  Examples for local nodes:
 > ```bash
 > NEXT_PUBLIC_WS_PROVIDER=ws://localhost:9545/rpc/v0_8 # pathfinder 
-> # NEXT_PUBLIC_WS_PROVIDER=ws://localhost:6071/ws/rpc/v0_8 #juno
+> # NEXT_PUBLIC_WS_PROVIDER=ws://localhost:6071/ws/rpc/v0_8 # juno
 > ```
 
 - Launch with `npm run dev`
