@@ -9,9 +9,9 @@ export default function InitWS() {
 
   useEffect(() => {
     const wsURL = process.env.NEXT_PUBLIC_WS_PROVIDER??"";
-    console.log("Connection of websocket...", wsURL);
+    console.log("Connection of websocket...");
     const myWS = new WebSocketChannel({ nodeUrl: wsURL });
-    console.log("WS connection response :",myWS);
+    // console.log("WS connection response :",myWS);
     myWS.waitForConnection().then((resp: any) => {
       console.log("Is connected WS =", myWS.isConnected());
       setWsProvider(myWS);
