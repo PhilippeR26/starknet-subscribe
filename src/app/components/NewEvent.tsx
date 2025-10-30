@@ -31,7 +31,7 @@ export default function NewEvent() {
   useEffect(() => {
     console.log("Subscribe Events...");
     let handlerNewEvents: Subscription;
-    myWS!.subscribeEvents(strkAddress).then((resp: Subscription) => {
+    myWS!.subscribeEvents({fromAddress:strkAddress}).then((resp: Subscription) => {
       handlerNewEvents = resp;
       console.log("Subscribe Events response =", resp);
       handlerNewEvents.on(getEvent);

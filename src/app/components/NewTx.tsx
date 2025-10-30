@@ -2,9 +2,9 @@
 import { Box, Spinner } from "@chakra-ui/react"
 import { useGlobalState } from "./globalContext";
 import { useEffect, useRef, useState } from "react";
-import { SubscriptionNewHeadsResponse, type SubscriptionPendingTransactionsResponse, type TXN_WITH_HASH } from "@starknet-io/types-js";
+import { type TXN_WITH_HASH } from "@starknet-io/types-js";
 import { formatBalance } from "../utils/utils";
-import type { Subscription, TXN_HASH } from "starknet";
+import { json, type Subscription, type TXN_HASH } from "starknet";
 
 
 
@@ -18,7 +18,7 @@ export default function NewTx() {
   // increase the counter
   function increaseCounter() {
     setCounter(counter + 1); // counter is refreshed thanks to useRef()
-    console.log("newTx event", counter + 1, "=");
+    console.log("newTx", counter + 1, "=");
   };
   useEffect(() => { counterRef.current = increaseCounter }); // keep counter updated
 
@@ -31,7 +31,7 @@ export default function NewTx() {
   useEffect(() => {
     console.log("Subscribe newTx...");
     let handlerNewTx: Subscription;
-    myWS!.subscribePendingTransaction().then((resp: Subscription) => {
+    myWS!.subscribeNewTransactions({finalityStatus:["PRE_CONFIRMED"]}).then((resp: Subscription) => {
       handlerNewTx = resp;
       console.log("Subscribe newTx response =", resp);
       handlerNewTx.on(getEvent);
@@ -67,7 +67,7 @@ export default function NewTx() {
         <Spinner color={"blue"}></Spinner> {" "}
         Fetching data
       </> : <>
-        last pending transaction #{counter}: {tx.toString()}<br></br>
+        last pending transaction #{counter}: {json.stringify(tx)}<br></br>
 
       </>}
     </Box>

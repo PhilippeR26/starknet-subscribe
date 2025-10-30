@@ -2,7 +2,7 @@
 import { Box, Spinner } from "@chakra-ui/react"
 import { useGlobalState } from "./globalContext";
 import { useEffect, useRef, useState } from "react";
-import { type BLOCK_HEADER, type SubscriptionNewHeadsResponse } from "@starknet-io/types-js";
+import { type BLOCK_HEADER } from "@starknet-io/types-js";
 import type { Subscription } from "starknet";
 
 
