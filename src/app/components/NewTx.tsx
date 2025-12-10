@@ -4,7 +4,7 @@ import { useGlobalState } from "./globalContext";
 import { useEffect, useRef, useState } from "react";
 import { type TXN_WITH_HASH } from "@starknet-io/types-js";
 import { formatBalance } from "../utils/utils";
-import { json, type Subscription, type TXN_HASH } from "starknet";
+import { json, type Subscription, type SubscriptionNewTransactionEvent, type TXN_HASH } from "starknet";
 
 
 
@@ -30,8 +30,8 @@ export default function NewTx() {
 
   useEffect(() => {
     console.log("Subscribe newTx...");
-    let handlerNewTx: Subscription;
-    myWS!.subscribeNewTransactions({finalityStatus:["PRE_CONFIRMED"]}).then((resp: Subscription) => {
+    let handlerNewTx: SubscriptionNewTransactionEvent;
+    myWS!.subscribeNewTransactions({finalityStatus:["PRE_CONFIRMED"]}).then((resp: SubscriptionNewTransactionEvent) => {
       handlerNewTx = resp;
       console.log("Subscribe newTx response =", resp);
       handlerNewTx.on(getEvent);

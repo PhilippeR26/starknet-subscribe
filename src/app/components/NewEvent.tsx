@@ -4,7 +4,7 @@ import { useGlobalState } from "./globalContext";
 import { useEffect, useRef, useState } from "react";
 import { type EMITTED_EVENT } from "@starknet-io/types-js";
 import { strkAddress } from "../utils/constants";
-import type { Subscription } from "starknet";
+import type { Subscription, SubscriptionStarknetEventsEvent } from "starknet";
 
 
 
@@ -31,7 +31,7 @@ export default function NewEvent() {
   useEffect(() => {
     console.log("Subscribe Events...");
     let handlerNewEvents: Subscription;
-    myWS!.subscribeEvents({fromAddress:strkAddress}).then((resp: Subscription) => {
+    myWS!.subscribeEvents({fromAddress:strkAddress}).then((resp: SubscriptionStarknetEventsEvent) => {
       handlerNewEvents = resp;
       console.log("Subscribe Events response =", resp);
       handlerNewEvents.on(getEvent);

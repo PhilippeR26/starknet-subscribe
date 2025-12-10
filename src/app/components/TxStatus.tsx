@@ -3,7 +3,7 @@ import { Box, Spinner } from "@chakra-ui/react"
 import { useGlobalState } from "./globalContext";
 import { useEffect, useState } from "react";
 import { type NEW_TXN_STATUS } from "@starknet-io/types-js";
-import type { Subscription } from "starknet";
+import type { Subscription, SubscriptionTransactionStatusEvent } from "starknet";
 
 
 
@@ -20,8 +20,8 @@ export default function TxStatus() {
 
   useEffect(() => {
     console.log("Subscribe txStatus...");
-    let handlerNewTxStatus: Subscription;
-    myWS!.subscribeTransactionStatus({ transactionHash: "0x7f0dce88163f6565139d677f86ded8c396b449ed098272c6b06c5d2bddeae43" }).then((resp: Subscription) => {
+    let handlerNewTxStatus: SubscriptionTransactionStatusEvent;
+    myWS!.subscribeTransactionStatus({ transactionHash: "0x7f0dce88163f6565139d677f86ded8c396b449ed098272c6b06c5d2bddeae43" }).then((resp: SubscriptionTransactionStatusEvent) => {
       handlerNewTxStatus = resp;
       console.log("Subscribe txStatus response =", resp);
       handlerNewTxStatus.on(storeTxStatus);

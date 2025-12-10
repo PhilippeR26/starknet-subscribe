@@ -3,7 +3,7 @@ import { Box, Spinner } from "@chakra-ui/react"
 import { useGlobalState } from "./globalContext";
 import { useEffect, useRef, useState } from "react";
 import { type BLOCK_HEADER } from "@starknet-io/types-js";
-import type { Subscription } from "starknet";
+import type { Subscription, SubscriptionNewHeadsEvent } from "starknet";
 
 
 
@@ -20,7 +20,7 @@ export default function NewBlock() {
   useEffect(() => {
     console.log("Subscribe newHeads...");
     let handlerNewHeads: Subscription;
-    myWS!.subscribeNewHeads().then((resp: Subscription) => {
+    myWS!.subscribeNewHeads().then((resp: SubscriptionNewHeadsEvent) => {
       handlerNewHeads = resp;
       console.log("Subscribe newHead response =", resp);
       handlerNewHeads.on(storeNewBlock);
