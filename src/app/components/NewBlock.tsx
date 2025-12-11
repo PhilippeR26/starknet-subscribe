@@ -19,7 +19,7 @@ export default function NewBlock() {
 
   useEffect(() => {
     console.log("Subscribe newHeads...");
-    let handlerNewHeads: Subscription;
+    let handlerNewHeads: SubscriptionNewHeadsEvent;
     myWS!.subscribeNewHeads().then((resp: SubscriptionNewHeadsEvent) => {
       handlerNewHeads = resp;
       console.log("Subscribe newHead response =", resp);
@@ -30,7 +30,7 @@ export default function NewBlock() {
       console.log("Unsubscribe newHeads...");
       handlerNewHeads.unsubscribe().then(() => {
         console.log("Unsubscribed from newHeads.");
-       });
+      });
     }
   },
     []

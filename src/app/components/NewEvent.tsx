@@ -9,7 +9,6 @@ import type { Subscription, SubscriptionStarknetEventsEvent } from "starknet";
 
 
 export default function NewEvent() {
-
   const myWS = useGlobalState(state => state.wsProvider);
   const [event, setEvent] = useState<EMITTED_EVENT | undefined>(undefined);
   const [counter, setCounter] = useState<number>(0);
@@ -30,8 +29,8 @@ export default function NewEvent() {
 
   useEffect(() => {
     console.log("Subscribe Events...");
-    let handlerNewEvents: Subscription;
-    myWS!.subscribeEvents({fromAddress:strkAddress}).then((resp: SubscriptionStarknetEventsEvent) => {
+    let handlerNewEvents: SubscriptionStarknetEventsEvent;
+    myWS!.subscribeEvents({ fromAddress: strkAddress }).then((resp: SubscriptionStarknetEventsEvent) => {
       handlerNewEvents = resp;
       console.log("Subscribe Events response =", resp);
       handlerNewEvents.on(getEvent);
@@ -42,7 +41,7 @@ export default function NewEvent() {
       handlerNewEvents.unsubscribe().then(() => {
         console.log("Unsubscribed from newEvents.");
 
-       });
+      });
     }
   },
     []
